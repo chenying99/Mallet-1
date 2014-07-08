@@ -1,0 +1,115 @@
+diff --git a/ql/src/java/org/apache/hadoop/hive/ql/exec/CommonJoinOperator.java b/ql/src/java/org/apache/hadoop/hive/ql/exec/CommonJoinOperator.java
+index d320b47..ead8586 100644
+--- a/ql/src/java/org/apache/hadoop/hive/ql/exec/CommonJoinOperator.java
++++ b/ql/src/java/org/apache/hadoop/hive/ql/exec/CommonJoinOperator.java
+@@ -784,12 +784,14 @@ protected void reportProgress() {
+   @Override
+   public void closeOp(boolean abort) throws HiveException {
+     LOG.trace("Join Op close");
+-    for (AbstractRowContainer<List<Object>> alw : storage) {
+-      if (alw != null) {
+-        alw.clear(); // clean up the temp files
++    if (storage != null) {
++      for (AbstractRowContainer<List<Object>> alw : storage) {
++        if (alw != null) {
++          alw.clear(); // clean up the temp files
++        }
+       }
++      Arrays.fill(storage, null);
+     }
+-    Arrays.fill(storage, null);
+   }
+ 
+   @Override
+diff --git a/ql/src/java/org/apache/hadoop/hive/ql/optimizer/GenMapRedUtils.java b/ql/src/java/org/apache/hadoop/hive/ql/optimizer/GenMapRedUtils.java
+index 2259977..eb9fb1b 100644
+--- a/ql/src/java/org/apache/hadoop/hive/ql/optimizer/GenMapRedUtils.java
++++ b/ql/src/java/org/apache/hadoop/hive/ql/optimizer/GenMapRedUtils.java
+@@ -57,6 +57,7 @@
+ import org.apache.hadoop.hive.ql.parse.OpParseContext;
+ import org.apache.hadoop.hive.ql.parse.ParseContext;
+ import org.apache.hadoop.hive.ql.parse.PrunedPartitionList;
++import org.apache.hadoop.hive.ql.parse.QBJoinTree;
+ import org.apache.hadoop.hive.ql.parse.RowResolver;
+ import org.apache.hadoop.hive.ql.parse.SemanticException;
+ import org.apache.hadoop.hive.ql.plan.ExprNodeDesc;
+@@ -950,7 +951,13 @@ private static void splitTasks(ReduceSinkOperator op,
+ 
+     if (needsTagging(cplan.getReduceWork())) {
+       String origStreamDesc;
+-      streamDesc = "$INTNAME";
++      Operator<? extends OperatorDesc> joinOp = cplan.getReduceWork().getReducer();
++      QBJoinTree joinTree = parseCtx.getJoinContext().get(joinOp);
++      if (joinTree != null) {
++        streamDesc = joinTree.getJoinStreamDesc();
++      } else {
++        streamDesc = "$INTNAME";
++      }
+       origStreamDesc = streamDesc;
+       int pos = 0;
+       while (cplan.getMapWork().getAliasToWork().get(streamDesc) != null) {
+diff --git a/ql/src/java/org/apache/hadoop/hive/ql/optimizer/physical/CommonJoinTaskDispatcher.java b/ql/src/java/org/apache/hadoop/hive/ql/optimizer/physical/CommonJoinTaskDispatcher.java
+index c15a181..3b3da63 100644
+--- a/ql/src/java/org/apache/hadoop/hive/ql/optimizer/physical/CommonJoinTaskDispatcher.java
++++ b/ql/src/java/org/apache/hadoop/hive/ql/optimizer/physical/CommonJoinTaskDispatcher.java
+@@ -17,8 +17,6 @@
+  */
+ package org.apache.hadoop.hive.ql.optimizer.physical;
+ 
+-import java.io.ByteArrayInputStream;
+-import java.io.InputStream;
+ import java.io.Serializable;
+ import java.io.UnsupportedEncodingException;
+ import java.util.ArrayList;
+@@ -254,6 +252,19 @@ private void mergeMapJoinTaskIntoItsChildMapRedTask(MapRedTask mapJoinTask, Conf
+     }
+     String childMRAlias = childMRAliases.get(0);
+ 
++    for (Map.Entry<String, ArrayList<String>> entry : childMapWork.getPathToAliases().entrySet()) {
++      String path = entry.getKey();
++      List<String> aliases = entry.getValue();
++
++      if (path.equals(childMRPath)) {
++        continue;
++      }
++
++      if (aliases.contains(mapJoinAlias)) {
++        return;
++      }
++    }
++
+     MapredLocalWork mapJoinLocalWork = mapJoinMapWork.getMapLocalWork();
+     MapredLocalWork childLocalWork = childMapWork.getMapLocalWork();
+ 
+diff --git a/ql/src/java/org/apache/hadoop/hive/ql/parse/ASTNodeOrigin.java b/ql/src/java/org/apache/hadoop/hive/ql/parse/ASTNodeOrigin.java
+index fba853f..b234fc7 100644
+--- a/ql/src/java/org/apache/hadoop/hive/ql/parse/ASTNodeOrigin.java
++++ b/ql/src/java/org/apache/hadoop/hive/ql/parse/ASTNodeOrigin.java
+@@ -51,6 +51,14 @@ public ASTNodeOrigin(String objectType, String objectName,
+     this.usageNode = usageNode;
+   }
+ 
++  public ASTNodeOrigin() {
++    this.objectType = null;
++    this.objectName = null;
++    this.objectDefinition = null;
++    this.usageAlias = null;
++    this.usageNode = null;
++  }
++
+   /**
+    * @return the type of the object from which an ASTNode originated, e.g.
+    *         "view".
+diff --git a/ql/src/java/org/apache/hadoop/hive/ql/parse/QBJoinTree.java b/ql/src/java/org/apache/hadoop/hive/ql/parse/QBJoinTree.java
+index 0aaf47e..7246042 100644
+--- a/ql/src/java/org/apache/hadoop/hive/ql/parse/QBJoinTree.java
++++ b/ql/src/java/org/apache/hadoop/hive/ql/parse/QBJoinTree.java
+@@ -150,7 +150,7 @@ public int getNextTag() {
+   }
+ 
+   public String getJoinStreamDesc() {
+-    return "$INTNAME";
++    return id + ":$INTNAME";
+   }
+ 
+   public JoinCond[] getJoinCond() {

@@ -1,0 +1,62 @@
+--
+-- Licensed to the Apache Software Foundation (ASF) under one or more
+-- contributor license agreements. See the NOTICE file distributed with
+-- this work for additional information regarding copyright ownership.
+-- The ASF licenses this file to You under the Apache License, Version 2.0
+-- (the "License"); you may not use this file except in compliance with
+-- the License. You may obtain a copy of the License at
+--
+-- http://www.apache.org/licenses/LICENSE-2.0
+--
+-- Unless required by applicable law or agreed to in writing, software
+-- distributed under the License is distributed on an "AS IS" BASIS,
+-- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-- See the License for the specific language governing permissions and
+-- limitations under the License.
+--
+
+DEFINE COMMENT = "-- ";
+[COMMENT] QUERY_ID=71;
+
+  define YEAR= random(1998, 2002, uniform);
+ define MONTH=random(11,12,uniform);
+ define MANAGER=random(1,100,uniform);
+
+ select i_brand_id brand_id, i_brand brand,t_hour,t_minute,
+    sum(ext_price) ext_price
+ from item i join (select ws_ext_sales_price as ext_price, 
+                        ws_sold_date_sk as sold_date_sk,
+                        ws_item_sk as sold_item_sk,
+                        ws_sold_time_sk as time_sk  
+                 from web_sales ws join date_dim d
+                        on d.d_date_sk = ws.ws_sold_date_sk
+                        and d.d_moy=[MONTH]
+                        and d.d_year=[YEAR]
+                 union all
+                 select cs_ext_sales_price as ext_price,
+                        cs_sold_date_sk as sold_date_sk,
+                        cs_item_sk as sold_item_sk,
+                        cs_sold_time_sk as time_sk
+                 from catalog_sales cs join date_dim d
+                        on d.d_date_sk = cs.cs_sold_date_sk
+                        and d.d_moy=[MONTH]
+                        and d.d_year=[YEAR]
+                 union all
+                 select ss_ext_sales_price as ext_price,
+                        ss_sold_date_sk as sold_date_sk,
+                        ss_item_sk as sold_item_sk,
+                        ss_sold_time_sk as time_sk
+                 from store_sales ss join date_dim d
+                        on d.d_date_sk = ss.ss_sold_date_sk
+                        and d.d_moy=[MONTH]
+                        and d.d_year=[YEAR]
+                 ) tmp
+          on tmp.sold_item_sk = i.i_item_sk
+          and i.i_manager_id=1
+        join time_dim t
+          on tmp.time_sk = t.t_time_sk
+ where
+    (t_meal_time = 'breakfast' or t_meal_time = 'dinner')
+ group by i_brand, i_brand_id,t_hour,t_minute
+ order by ext_price desc, brand_id
+ ;
