@@ -153,3 +153,7 @@ Mallet uses JDBC to present workload to the target database, so it works with Hi
 * Mallet relaxes the ACID requirements on the target databases in the TPC-DS 1.1.0 specification.
 * Mallet does not report price related metrics defined in the TPC-DS 1.1.0 specification.
 
+---
+## Contact
+rui.sun@intel.com, lan.yi@intel.com
+
