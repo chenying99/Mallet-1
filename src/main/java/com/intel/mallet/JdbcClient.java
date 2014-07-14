@@ -43,7 +43,7 @@ public class JdbcClient {
       // Initiate JDBC session.
       // The <password> field value is ignored in non-secure mode.
       Connection con = DriverManager.getConnection("jdbc:hive2://" + conf.getHiveServerHost() + ":" +
-                                                   conf.getHiveServerPort() + "/default", conf.getUser(), "");
+                                                   conf.getHiveServerPort() + "/;auth=noSasl", conf.getUser(), "");
       return con;
     } catch (SQLException e) {
       throw new MalletException(Thread.currentThread().getName() + " failed to connect to JDBC server.", e);

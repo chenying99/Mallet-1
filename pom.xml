@@ -24,13 +24,61 @@
   <version>1.0</version>
   <name>mallet</name>
 
-  <dependencies>
+  <dependencies> 
+    <!-- for Impala 1.2.4 -->
+    <dependency>
+      <groupId>commons-logging</groupId>
+      <artifactId>commons-logging</artifactId>
+      <version>1.0.4</version>
+    </dependency>
+
     <dependency>
       <groupId>org.apache.hive</groupId>
       <artifactId>hive-jdbc</artifactId>
-      <version>0.13.1</version>
-      <scope>runtime</scope>
+      <version>0.10.0-cdh4.2.0</version>
     </dependency>
+
+    <dependency>
+      <groupId>org.apache.hive</groupId>
+      <artifactId>hive-metastore</artifactId>
+      <version>0.10.0-cdh4.2.0</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.hive</groupId>
+      <artifactId>hive-service</artifactId>
+      <version>0.10.0-cdh4.2.0</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.thrift</groupId>
+      <artifactId>libfb303</artifactId>
+      <version>0.9.0</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.thrift</groupId>
+      <artifactId>libthrift</artifactId>
+      <version>0.9.0</version>
+    </dependency>
+
+    <dependency>
+      <groupId>log4j</groupId>
+      <artifactId>log4j</artifactId>
+      <version>1.2.16</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <version>1.6.4</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-log4j12</artifactId>
+      <version>1.6.1</version>
+    </dependency>  
   </dependencies>
 
   <repositories>
@@ -39,6 +87,13 @@
       <name>repository.cloudera.com-releases</name>
       <url>https://repository.cloudera.com/artifactory/datanucleus</url>
     </repository>
+
+   <!-- for Impala 1.2.4 -->
+    <repository>
+      <id>repository.cloudera.com.cloudera-repos</id>
+      <url>https://repository.cloudera.com/artifactory/cloudera-repos</url>
+    </repository>
+
   </repositories>
     
   <build>

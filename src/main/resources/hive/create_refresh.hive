@@ -32,7 +32,6 @@ create external table s_catalog_page
     cpag_description            string,
     cpag_type                   string                   
 )
-ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe' 
 WITH SERDEPROPERTIES ('field.delim'='|','serialization.null.format'='')
 LOCATION '${MALLET_DB_DIR}/s_catalog_page_${REFRESH}';
 
@@ -45,7 +44,6 @@ create external table s_zip_to_gmt
     zipg_zip                    STRING               ,
     zipg_gmt_offset             BIGINT               
 )
-ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe' 
 WITH SERDEPROPERTIES ('field.delim'='|','serialization.null.format'='')
 LOCATION '${MALLET_DB_DIR}/s_zip_to_gmt_${REFRESH}';
 
@@ -64,7 +62,6 @@ create external table s_purchase_lineitem
     plin_coupon_amt             double,
     plin_comment                string
 )
-ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe' 
 WITH SERDEPROPERTIES ('field.delim'='|','serialization.null.format'='')
 LOCATION '${MALLET_DB_DIR}/s_purchase_lineitem_${REFRESH}';
 
@@ -112,7 +109,6 @@ create external table s_customer
     cust_vehicle_cnt            INT                      ,
     cust_annual_income          DOUBLE                  
 )
-ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe' 
 WITH SERDEPROPERTIES ('field.delim'='|','serialization.null.format'='')
 LOCATION '${MALLET_DB_DIR}/s_customer_${REFRESH}';
 
@@ -134,7 +130,6 @@ create external table s_customer_address
     cadr_zip                    STRING                      ,
     cadr_country                STRING                      
 )
-ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe' 
 WITH SERDEPROPERTIES ('field.delim'='|','serialization.null.format'='')
 LOCATION '${MALLET_DB_DIR}/s_customer_address_${REFRESH}';
 
@@ -153,7 +148,6 @@ create external table s_purchase
     purc_clerk_id               bigint,
     purc_comment                string
 )
-ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe' 
 WITH SERDEPROPERTIES ('field.delim'='|','serialization.null.format'='')
 LOCATION '${MALLET_DB_DIR}/s_purchase_${REFRESH}';
 
@@ -172,7 +166,6 @@ create external table s_catalog_order
     cord_call_center_id         string,
     cord_order_comments         string
 )
-ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe' 
 WITH SERDEPROPERTIES ('field.delim'='|','serialization.null.format'='')
 LOCATION '${MALLET_DB_DIR}/s_catalog_order_${REFRESH}';
 
@@ -191,7 +184,6 @@ create external table s_web_order
     word_web_site_id            STRING                      ,
     word_order_comments         STRING                     
 )
-ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe' 
 WITH SERDEPROPERTIES ('field.delim'='|','serialization.null.format'='')
 LOCATION '${MALLET_DB_DIR}/s_web_order_${REFRESH}';
 
@@ -212,7 +204,6 @@ create external table s_item
     item_container              STRING                      ,
     item_manager_id             BIGINT                       
 )
-ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe' 
 WITH SERDEPROPERTIES ('field.delim'='|','serialization.null.format'='')
 LOCATION '${MALLET_DB_DIR}/s_item_${REFRESH}';
 
@@ -235,7 +226,6 @@ create external table s_catalog_order_lineitem
     clin_catalog_page_number    bigint,
     clin_ship_cost              double
 )
-ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe' 
 WITH SERDEPROPERTIES ('field.delim'='|','serialization.null.format'='')
 LOCATION '${MALLET_DB_DIR}/s_catalog_order_lineitem_${REFRESH}';
 
@@ -257,7 +247,6 @@ create external table s_web_order_lineitem
     wlin_ship_cost              DOUBLE                  ,
     wlin_web_page_id            STRING                      
 )
-ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe' 
 WITH SERDEPROPERTIES ('field.delim'='|','serialization.null.format'='')
 LOCATION '${MALLET_DB_DIR}/s_web_order_lineitem_${REFRESH}';
 
@@ -279,7 +268,6 @@ create external table s_store
     stor_market_manager         STRING,
     stor_tax_percentage         DOUBLE
 )
-ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe' 
 WITH SERDEPROPERTIES ('field.delim'='|','serialization.null.format'='')
 LOCATION '${MALLET_DB_DIR}/s_store_${REFRESH}';
 
@@ -300,7 +288,6 @@ create external table s_call_center
     call_center_manager         STRING                      ,
     call_center_tax_percentage  DOUBLE                  
 )
-ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe' 
 WITH SERDEPROPERTIES ('field.delim'='|','serialization.null.format'='')
 LOCATION '${MALLET_DB_DIR}/s_call_center_${REFRESH}';
 
@@ -318,7 +305,6 @@ create external table s_web_site
     wsit_site_manager           STRING                      ,
     wsit_tax_percentage         DOUBLE                  
 )
-ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe' 
 WITH SERDEPROPERTIES ('field.delim'='|','serialization.null.format'='')
 LOCATION '${MALLET_DB_DIR}/s_web_site_${REFRESH}';
 
@@ -332,7 +318,6 @@ create external table s_warehouse
     wrhs_warehouse_desc         STRING                     ,
     wrhs_warehouse_sq_ft        BIGINT                       
 )
-ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe' 
 WITH SERDEPROPERTIES ('field.delim'='|','serialization.null.format'='')
 LOCATION '${MALLET_DB_DIR}/s_warehouse_${REFRESH}';
 
@@ -353,7 +338,6 @@ create external table s_web_page
     wpag_image_cnt              BIGINT                       ,
     wpag_max_ad_cnt             BIGINT                       
 )
-ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe' 
 WITH SERDEPROPERTIES ('field.delim'='|','serialization.null.format'='')
 LOCATION '${MALLET_DB_DIR}/s_web_page_${REFRESH}';
 
@@ -382,7 +366,6 @@ create external table s_promotion
     prom_discount_active        STRING                       ,
     prom_discount_pct           DOUBLE                  
 )
-ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe' 
 WITH SERDEPROPERTIES ('field.delim'='|','serialization.null.format'='')
 LOCATION '${MALLET_DB_DIR}/s_promotion_${REFRESH}';
 
@@ -410,7 +393,6 @@ create external table s_store_returns
     sret_store_credit           double,
     sret_reason_id              string
 )
-ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe' 
 WITH SERDEPROPERTIES ('field.delim'='|','serialization.null.format'='')
 LOCATION '${MALLET_DB_DIR}/s_store_returns_${REFRESH}';
 
@@ -441,7 +423,6 @@ create external table s_catalog_returns
     cret_catalog_page_id        string,
     cret_warehouse_id           string
 )
-ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe' 
 WITH SERDEPROPERTIES ('field.delim'='|','serialization.null.format'='')
 LOCATION '${MALLET_DB_DIR}/s_catalog_returns_${REFRESH}';
 
@@ -469,7 +450,6 @@ create external table s_web_returns
     wret_account_credit         DOUBLE                  ,
     wret_reason_id              STRING                      
 )
-ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe' 
 WITH SERDEPROPERTIES ('field.delim'='|','serialization.null.format'='')
 LOCATION '${MALLET_DB_DIR}/s_web_returns_${REFRESH}';
 
@@ -484,7 +464,6 @@ create external table s_inventory
     invn_date                   STRING              ,
     invn_qty_on_hand            BIGINT                       
 )
-ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe' 
 WITH SERDEPROPERTIES ('field.delim'='|','serialization.null.format'='')
 LOCATION '${MALLET_DB_DIR}/s_inventory_${REFRESH}';
 
@@ -494,7 +473,6 @@ create external table s_delete
     dele_start_date  STRING,
     dele_end_date    STRING
 )
-ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe' 
 WITH SERDEPROPERTIES ('field.delim'='|','serialization.null.format'='')
 LOCATION '${MALLET_DB_DIR}/s_delete_${REFRESH}';
 
@@ -504,7 +482,6 @@ create external table s_inventory_delete
     dele_start_date  STRING,
     dele_end_date    STRING
 )
-ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe' 
 WITH SERDEPROPERTIES ('field.delim'='|','serialization.null.format'='')
 LOCATION '${MALLET_DB_DIR}/s_inventory_delete_${REFRESH}';
 

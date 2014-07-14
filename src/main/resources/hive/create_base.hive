@@ -15,12 +15,13 @@
 -- limitations under the License.
 --
 
-DROP database IF EXISTS mallet_db CASCADE;
-CREATE DATABASE mallet_db;
+-- Impala does not support DROP database IF EXISTS mallet_db CASCADE;
+CREATE DATABASE IF NOT EXISTS mallet_db;
 
 USE mallet_db;
 
-CREATE EXTERNAL TABLE customer_address
+--Impala does not support ROW FORMAT SERDE ...
+CREATE EXTERNAL TABLE IF NOT EXISTS customer_address
 (
     ca_address_sk             BIGINT,
     ca_address_id             STRING,
@@ -36,11 +37,10 @@ CREATE EXTERNAL TABLE customer_address
     ca_gmt_offset             DOUBLE,
     ca_location_type          STRING
 )
-ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe' 
 WITH SERDEPROPERTIES ('field.delim'='|','serialization.null.format'='')
 LOCATION '${MALLET_DB_DIR}/customer_address';
 
-CREATE EXTERNAL TABLE customer_demographics
+CREATE EXTERNAL TABLE IF NOT EXISTS customer_demographics
 (
     cd_demo_sk                BIGINT,
     cd_gender                 STRING,
@@ -52,11 +52,10 @@ CREATE EXTERNAL TABLE customer_demographics
     cd_dep_employed_count     BIGINT,
     cd_dep_college_count      BIGINT
 )
-ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe' 
 WITH SERDEPROPERTIES ('field.delim'='|','serialization.null.format'='')
 LOCATION '${MALLET_DB_DIR}/customer_demographics';
 
-CREATE EXTERNAL TABLE date_dim
+CREATE EXTERNAL TABLE IF NOT EXISTS date_dim
 (
     d_date_sk                 BIGINT,
     d_date_id                 STRING,
@@ -87,11 +86,10 @@ CREATE EXTERNAL TABLE date_dim
     d_current_quarter         STRING,
     d_current_year            STRING
 )
-ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe' 
 WITH SERDEPROPERTIES ('field.delim'='|','serialization.null.format'='')
 LOCATION '${MALLET_DB_DIR}/date_dim';
 
-CREATE EXTERNAL TABLE warehouse
+CREATE EXTERNAL TABLE IF NOT EXISTS warehouse
 (
     w_warehouse_sk            BIGINT,
     w_warehouse_id            STRING,
@@ -108,11 +106,10 @@ CREATE EXTERNAL TABLE warehouse
     w_country                 STRING,
     w_gmt_offset              DOUBLE
 )
-ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe' 
 WITH SERDEPROPERTIES ('field.delim'='|','serialization.null.format'='')
 LOCATION '${MALLET_DB_DIR}/warehouse';
 
-CREATE EXTERNAL TABLE ship_mode
+CREATE EXTERNAL TABLE IF NOT EXISTS ship_mode
 (
     sm_ship_mode_sk           BIGINT,
     sm_ship_mode_id           STRING,
@@ -121,11 +118,10 @@ CREATE EXTERNAL TABLE ship_mode
     sm_carrier                STRING,
     sm_contract               STRING
 )
-ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe' 
 WITH SERDEPROPERTIES ('field.delim'='|','serialization.null.format'='')
 LOCATION '${MALLET_DB_DIR}/ship_mode';
 
-CREATE EXTERNAL TABLE time_dim
+CREATE EXTERNAL TABLE IF NOT EXISTS time_dim
 (
     t_time_sk                 BIGINT,
     t_time_id                 STRING,
@@ -138,31 +134,28 @@ CREATE EXTERNAL TABLE time_dim
     t_sub_shift               STRING,
     t_meal_time               STRING
 )
-ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe' 
 WITH SERDEPROPERTIES ('field.delim'='|','serialization.null.format'='')
 LOCATION '${MALLET_DB_DIR}/time_dim';
 
-CREATE EXTERNAL TABLE reason
+CREATE EXTERNAL TABLE IF NOT EXISTS reason
 (
     r_reason_sk               BIGINT,
     r_reason_id               STRING,
     r_reason_desc             STRING
 )
-ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe' 
 WITH SERDEPROPERTIES ('field.delim'='|','serialization.null.format'='')
 LOCATION '${MALLET_DB_DIR}/reason';
 
-CREATE EXTERNAL TABLE income_band
+CREATE EXTERNAL TABLE IF NOT EXISTS income_band
 (
     ib_income_band_sk         BIGINT,
     ib_lower_bound            BIGINT,
     ib_upper_bound            BIGINT
 )
-ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe' 
 WITH SERDEPROPERTIES ('field.delim'='|','serialization.null.format'='')
 LOCATION '${MALLET_DB_DIR}/income_band';
 
-CREATE EXTERNAL TABLE item
+CREATE EXTERNAL TABLE IF NOT EXISTS item
 (
     i_item_sk                 BIGINT,
     i_item_id                 STRING,
@@ -187,11 +180,10 @@ CREATE EXTERNAL TABLE item
     i_manager_id              BIGINT,
     i_product_name            STRING
 )
-ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe' 
 WITH SERDEPROPERTIES ('field.delim'='|','serialization.null.format'='')
 LOCATION '${MALLET_DB_DIR}/item';
 
-CREATE EXTERNAL TABLE store
+CREATE EXTERNAL TABLE IF NOT EXISTS store
 (
     s_store_sk                BIGINT,
     s_store_id                STRING,
@@ -223,11 +215,10 @@ CREATE EXTERNAL TABLE store
     s_gmt_offset              DOUBLE,
     s_tax_precentage          DOUBLE
 )
-ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe' 
 WITH SERDEPROPERTIES ('field.delim'='|','serialization.null.format'='')
 LOCATION '${MALLET_DB_DIR}/store';
 
-CREATE EXTERNAL TABLE call_center
+CREATE EXTERNAL TABLE IF NOT EXISTS call_center
 (
     cc_call_center_sk         BIGINT,
     cc_call_center_id         STRING,
@@ -261,11 +252,10 @@ CREATE EXTERNAL TABLE call_center
     cc_gmt_offset             DOUBLE,
     cc_tax_percentage         DOUBLE
 )
-ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe' 
 WITH SERDEPROPERTIES ('field.delim'='|','serialization.null.format'='')
 LOCATION '${MALLET_DB_DIR}/call_center';
 
-CREATE EXTERNAL TABLE customer
+CREATE EXTERNAL TABLE IF NOT EXISTS customer
 (
     c_customer_sk             BIGINT,
     c_customer_id             STRING,
@@ -286,11 +276,10 @@ CREATE EXTERNAL TABLE customer
     c_email_address           STRING,
     c_last_review_date        STRING 
 )
-ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe' 
 WITH SERDEPROPERTIES ('field.delim'='|','serialization.null.format'='')
 LOCATION '${MALLET_DB_DIR}/customer';
 
-CREATE EXTERNAL TABLE web_site
+CREATE EXTERNAL TABLE IF NOT EXISTS web_site
 (
     web_site_sk               BIGINT,
     web_site_id               STRING,
@@ -319,12 +308,11 @@ CREATE EXTERNAL TABLE web_site
     web_gmt_offset            DOUBLE,
     web_tax_percentage        DOUBLE
 )
-ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe' 
 WITH SERDEPROPERTIES ('field.delim'='|','serialization.null.format'='')
 LOCATION '${MALLET_DB_DIR}/web_site'
 TBLPROPERTIES('serialization.null.format'='');
 
-CREATE EXTERNAL TABLE household_demographics
+CREATE EXTERNAL TABLE IF NOT EXISTS household_demographics
 (
     hd_demo_sk                BIGINT,
     hd_income_band_sk         BIGINT,
@@ -332,11 +320,10 @@ CREATE EXTERNAL TABLE household_demographics
     hd_dep_count              BIGINT,
     hd_vehicle_count          BIGINT
 )
-ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe' 
 WITH SERDEPROPERTIES ('field.delim'='|','serialization.null.format'='')
 LOCATION '${MALLET_DB_DIR}/household_demographics';
 
-CREATE EXTERNAL TABLE web_page
+CREATE EXTERNAL TABLE IF NOT EXISTS web_page
 (
     wp_web_page_sk            BIGINT,
     wp_web_page_id            STRING,
@@ -353,11 +340,10 @@ CREATE EXTERNAL TABLE web_page
     wp_image_count            BIGINT,
     wp_max_ad_count           BIGINT
 )
-ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe' 
 WITH SERDEPROPERTIES ('field.delim'='|','serialization.null.format'='')
 LOCATION '${MALLET_DB_DIR}/web_page';
 
-CREATE EXTERNAL TABLE promotion
+CREATE EXTERNAL TABLE IF NOT EXISTS promotion
 (
     p_promo_sk                BIGINT,
     p_promo_id                STRING,
@@ -379,11 +365,10 @@ CREATE EXTERNAL TABLE promotion
     p_purpose                 STRING,
     p_discount_active         STRING
 )
-ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe' 
 WITH SERDEPROPERTIES ('field.delim'='|','serialization.null.format'='')
 LOCATION '${MALLET_DB_DIR}/promotion';
 
-CREATE EXTERNAL TABLE catalog_page
+CREATE EXTERNAL TABLE IF NOT EXISTS catalog_page
 (
     cp_catalog_page_sk        BIGINT,
     cp_catalog_page_id        STRING,
@@ -395,22 +380,20 @@ CREATE EXTERNAL TABLE catalog_page
     cp_description            STRING,
     cp_type                   STRING
 )
-ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe' 
 WITH SERDEPROPERTIES ('field.delim'='|','serialization.null.format'='')
 LOCATION '${MALLET_DB_DIR}/catalog_page';
 
-CREATE EXTERNAL TABLE inventory
+CREATE EXTERNAL TABLE IF NOT EXISTS inventory
 (
     inv_date_sk               BIGINT,
     inv_item_sk               BIGINT,
     inv_warehouse_sk          BIGINT,
     inv_quantity_on_hand      BIGINT
 )
-ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe' 
 WITH SERDEPROPERTIES ('field.delim'='|','serialization.null.format'='')
 LOCATION '${MALLET_DB_DIR}/inventory';
 
-CREATE EXTERNAL TABLE web_returns
+CREATE EXTERNAL TABLE IF NOT EXISTS web_returns
 (
     wr_returned_date_sk       BIGINT,
     wr_returned_time_sk       BIGINT,
@@ -437,11 +420,10 @@ CREATE EXTERNAL TABLE web_returns
     wr_account_credit         DOUBLE,
     wr_net_loss               DOUBLE
 )
-ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe' 
 WITH SERDEPROPERTIES ('field.delim'='|','serialization.null.format'='')
 LOCATION '${MALLET_DB_DIR}/web_returns';
 
-CREATE EXTERNAL TABLE web_sales
+CREATE EXTERNAL TABLE IF NOT EXISTS web_sales
 (
     ws_sold_date_sk           BIGINT,
     ws_sold_time_sk           BIGINT,
@@ -478,11 +460,10 @@ CREATE EXTERNAL TABLE web_sales
     ws_net_paid_inc_ship_tax  DOUBLE,
     ws_net_profit             DOUBLE
 )
-ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe' 
 WITH SERDEPROPERTIES ('field.delim'='|','serialization.null.format'='')
 LOCATION '${MALLET_DB_DIR}/web_sales';
 
-CREATE EXTERNAL TABLE catalog_sales
+CREATE EXTERNAL TABLE IF NOT EXISTS catalog_sales
 (
     cs_sold_date_sk           BIGINT,
     cs_sold_time_sk           BIGINT,
@@ -519,11 +500,10 @@ CREATE EXTERNAL TABLE catalog_sales
     cs_net_paid_inc_ship_tax  DOUBLE,
     cs_net_profit             DOUBLE
 )
-ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe'
 WITH SERDEPROPERTIES ('field.delim'='|','serialization.null.format'='')
 LOCATION '${MALLET_DB_DIR}/catalog_sales';
 
-CREATE EXTERNAL TABLE catalog_returns
+CREATE EXTERNAL TABLE IF NOT EXISTS catalog_returns
 (
     cr_returned_date_sk       BIGINT,
     cr_returned_time_sk       BIGINT,
@@ -553,11 +533,10 @@ CREATE EXTERNAL TABLE catalog_returns
     cr_store_credit           DOUBLE,
     cr_net_loss               DOUBLE
 )
-ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe'
 WITH SERDEPROPERTIES ('field.delim'='|','serialization.null.format'='')
 LOCATION '${MALLET_DB_DIR}/catalog_returns';
 
-CREATE EXTERNAL TABLE store_sales
+CREATE EXTERNAL TABLE IF NOT EXISTS store_sales
 (
     ss_sold_date_sk           BIGINT,
     ss_sold_time_sk           BIGINT,
@@ -583,11 +562,10 @@ CREATE EXTERNAL TABLE store_sales
     ss_net_paid_inc_tax       DOUBLE,
     ss_net_profit             DOUBLE
 )
-ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe'
 WITH SERDEPROPERTIES ('field.delim'='|','serialization.null.format'='')
 LOCATION '${MALLET_DB_DIR}/store_sales';
 
-CREATE EXTERNAL TABLE store_returns
+CREATE EXTERNAL TABLE IF NOT EXISTS store_returns
 (
     sr_returned_date_sk       BIGINT,
     sr_returned_time_sk       BIGINT,
@@ -610,6 +588,5 @@ CREATE EXTERNAL TABLE store_returns
     sr_store_credit           DOUBLE,
     sr_net_loss               DOUBLE
 )
-ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe'
 WITH SERDEPROPERTIES ('field.delim'='|','serialization.null.format'='')
 LOCATION '${MALLET_DB_DIR}/store_returns';
