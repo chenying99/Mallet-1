@@ -1,5 +1,16 @@
 # Mallet - A Decision Support Benchmark Derived from TPC-DS
 
+- Release version: 1.0
+- Release date: 2014/7/14
+- Contact: [Rui Sun](mailto:rui.sun@intel.com), [Lan Yi](mailto:lan.yi@intel.com), [Grace Huang](mailto:jie.huang@intel.com)
+- Homepage: https://github.com/intel-hadoop/Mallet
+
+- Contents:
+    1. Overview
+    2. Getting Started
+    3. Project Directory Layout
+    4. Limitations and Known Issues
+
 ---
 ## OVERVIEW
 
@@ -153,7 +164,4 @@ Mallet uses JDBC to present workload to the target database, so it works with Hi
 * Mallet relaxes the ACID requirements on the target databases in the TPC-DS 1.1.0 specification.
 * Mallet does not report price related metrics defined in the TPC-DS 1.1.0 specification.
 
----
-## Contact
-rui.sun@intel.com, lan.yi@intel.com
 
