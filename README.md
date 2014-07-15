@@ -2,7 +2,7 @@
 
 - Release version: 1.0
 - Release date: 2014/7/14
-- Contact: [Rui Sun](mailto:rui.sun@intel.com), [Lan Yi](mailto:lan.yi@intel.com), [Grace Huang](mailto:jie.huang@intel.com)
+- Contact: [Rui Sun](mailto:rui.sun@intel.com), [Lan Yi](mailto:lan.yi@intel.com), [Grace Huang](mailto:jie.huang@intel.com), [Jiangang, Duan](mailto:jiangang.duan@intel.com)
 - Homepage: https://github.com/intel-hadoop/Mallet
 
 - Contents:
