@@ -1,4 +1,4 @@
-# Mallet - A Decision Support Benchmark Derived from TPC-DS
+# Mallet - A Decision Support Benchmark Derived from TPC-DS (Impala Version)
 
 ---
 ## OVERVIEW
